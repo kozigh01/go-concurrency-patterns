@@ -9,7 +9,7 @@ import (
 func example8() {
 	rand.Seed(time.Now().UnixNano())
 
-	quit := make(chan bool)
+	quit := make(chan string)
 	t := time.After(3 * time.Second)
 	c := boring8("Joe", quit)
 
@@ -18,7 +18,8 @@ func example8() {
 		select {
 		case s := <- c: fmt.Printf("Msg: %q\n", s)
 		case <- t: 
-			quit <- true
+			quit <- "Bye!"
+			fmt.Printf("Joe says: %q\n", <-quit)
 			break exit
 		}		
 	}
@@ -26,13 +27,15 @@ func example8() {
 	fmt.Println("You're boring; I'm leaving")
 }
 
-func boring8(msg string, quit <-chan bool) <-chan string {
+func boring8(msg string, quit chan string) <-chan string {
 	c := make(chan string)
 	go func() {
 		for i := 0; ; i++ {
 			select {
 			case <- quit:
 				fmt.Println("Quitting.")
+				// cleanup()
+				quit <- "See ya!"
 				return
 			case c <- fmt.Sprintf("%s %d", msg, i):
 				time.Sleep(time.Duration(rand.Intn(1000)) * time.Millisecond)
