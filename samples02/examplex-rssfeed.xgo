@@ -1,0 +1,37 @@
+// package main
+
+// import (
+// 	"fmt"
+// 	"time"
+// )
+
+// type Item struct {
+// 	Title, Channel, GUID string
+// }
+
+// type Fetcher interface {
+// 	Fetch() (item []Item, next time.Time, err error)
+// }
+
+// type Subscription interface {
+// 	Updates() <-chan Item
+// 	Close() error
+// }
+
+// // converts Fetches to a stream
+// func Subscribe(fetcher Fetcher) Subscription {}
+
+// // merges several streams
+// func Merge(subs ...Subscription) Subscription {}
+
+// func Fetch(uri string) Fetcher {
+// 	f1 := func() (int, error) { return 42, nil }
+// 	f := func() (item []Item, next time.Time, err error) {
+// 		return []Item{}, time.Now().Add(100 * time.Millisecond), nil
+// 	}
+// 	return {}
+// }
+
+// func exampleX() {
+// 	fetch1 := Fetch("http://google.com")
+// }
